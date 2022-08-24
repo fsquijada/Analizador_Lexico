@@ -1,2 +1,2 @@
-# P1_202004812
-Analizador léxico
+# Lenguajes Formales y de programación
+Analizador léxico en python
