@@ -1,0 +1,54 @@
+------------------------------ Palabras reservadas ------------------------------
+TIPO                            PATRON                              LEXEMA
+
+Tipo                    palabra reservada Tipo                      Tipo
+Operacion               palabra reservada Operacion                 Operacion
+Numero                  palabra reservada Numero                    Numero
+Texto                   palabra reservada Texto                     Texto
+Funcion                 palabra reservada Funcion                   Funcion
+Titulo                  palabra reservada Titulo                    Titulo
+Descripcion             palabra reservada Descripcion               Descripcion
+Contenido               palabra reservada Contenido                 Contenido
+Estilo                  palabra reservada Estilo                    Estilo
+Color                   palabra reservada Color                     Color
+Tamanio                 palabra reservada Tamanio                   Tamanio
+SUMA                    palabra reservada SUMA                      SUMA
+RESTA                   palabra reservada RESTA                     RESTA
+MULTIPLICACION          palabra reservada MULTIPLICACION            MULTIPLICACION
+DIVISION                palabra reservada DIVISION                  DIVISION
+POTENCIA                palabra reservada POTENCIA                  POTENCIA
+RAIZ                    palabra reservada RAIZ                      RAIZ
+INVERSO                 palabra reservada INVERSO                   INVERSO
+SENO                    palabra reservada SENO                      SENO
+COSENO                  palabra reservada COSENO                    COSENO
+TANGENTE                palabra reservada TANGENTE                  TANGENTE
+MOD                     palabra reservada MOD                       MOD
+ESCRIBIR                palabra reservada ESCRIBIR                  ESCRIBIR
+AZUL                    palabra reservada AZUL                      AZUL
+VERDE                   palabra reservada VERDE                     VERDE
+GRIS                    palabra reservada GRIS                      GRIS
+
+------------------------------------- Signos ------------------------------------
+TIPO                            PATRON                              LEXEMA
+
+menorQue                Caracter <                                  <
+mayorQue                Caracter >                                  >
+igual                   Caracter =                                  =
+diagonal                Caracter /                                  /
+
+-------------------------------------- Otros ------------------------------------
+TIPO                            PATRON                              LEXEMA
+
+numeroEntero            Secuencia de 1 o más dígitos                25
+numeroDecimal           Secuencia de 1 o más dígitos, seguidos      187.32
+                        por punto, seguido por 1 o más dígitos
+palabra                 Secuencia de 1 o más letras del abecedario  Hola
+                        y añadiendo las tildes
+
+T = Tipo
+Tx = Texto
+O = Operacion
+N = Numero
+E = [0-9]
+
+Tipo | Operacion | [0-9] ....
