@@ -1,9 +1,11 @@
 from tokens import Token
 from errores import Error
+from operaciones import OperacionesAritmeticas
 import re
 # Variables de clases
 token = Token ()
 error = Error ()
+operaciones = OperacionesAritmeticas ()
 
 class Analizador:
     def __init__(self):
@@ -70,6 +72,9 @@ class Analizador:
                         elif buffer == 'Estilo':
                             token.nuevoToken (buffer, 'Palabra reservada', (columna - 1), fila)
                             estado = 5
+                        elif buffer == 'ESCRIBIR':
+                            token.nuevoToken (buffer, 'Palabra reservada', (columna - 1), fila)
+                            estado = 4
                         else:
                             error.nuevoError (buffer, 'Error Lexico', (columna - 1), fila)
                         token.nuevoToken (caracter, 'Cierre', columna, fila)
@@ -78,7 +83,6 @@ class Analizador:
                     elif caracter == '=':
                         if buffer == 'Funcion':
                             token.nuevoToken (buffer, 'Palabra reservada', (columna - 1), fila)
-                            estado = 4
                             columna += 1
                         else:
                             error.nuevoError (buffer, 'Error lexico', (columna - 1), fila)
@@ -100,31 +104,36 @@ class Analizador:
                             error.nuevoError (caracter, 'Error léxico', columna, fila)
                             columna += 1
 
-            #! Pendientes determinar los demás estados
-            # Estado para cuando entra en "Tipo"
+            # Estado para cuando entra en "Tipo" para buscar "<" de las operaciones aritmeticas
             #? --------------  Estado 2 --------------------- 
             elif estado == 2:
-                if re.search('[A-Za-z]', caracter):
-                    buffer += caracter
+                # Verificamos que empiece con un signo menor que
+                if caracter == '<':
+                    token.nuevoToken (caracter, 'Apertura', columna, fila)
                     columna += 1
+                    estado = 6
                 elif caracter == centinela:
                     print ('Cadena analizada')
-
-
-
-
-
-
-
-
-
-
+                else:
+                    if caracter == '\n':
+                        columna = 1
+                        fila = fila + 1
+                    elif caracter == '\t':
+                        columna += 4
+                    elif caracter == ' ':
+                        columna += 1
+                    elif caracter == '\r':
+                        pass
+                    else:
+                        error.nuevoError (caracter, 'Error léxico', columna, fila)
+                        columna += 1
+                    buffer = ''
+                  
             # Estado para cuando entra en "Texto"
             #? --------------  Estado 3 --------------------- 
             elif estado == 3:
                 if bandera == False:
                     if caracter == '<':
-                        #print (texto)
                         buffer += caracter
                         columna += 1
                         bandera = True
@@ -141,7 +150,6 @@ class Analizador:
                             columna += 1
                         elif caracter == '\r':
                             pass
-                        #! Colocar aqui por si se necesita validar lo que esta dentro del texto
                         else:
                             columna += 1
                 else:
@@ -153,10 +161,13 @@ class Analizador:
                         print ('Cadena analizada')
                     elif caracter == '/':
                         buffer += caracter
-                        columna += 1
                         if buffer == '</':
-                            estado = 10
+                            token.nuevoToken (texto, 'Cadena de texto', (columna - 2), fila)
+                            token.nuevoToken ('<', 'Apertura', (columna - 1), fila)
+                            token.nuevoToken (caracter, 'Cierre Tag', columna, fila)
+                            estado = 100
                             buffer = ''
+                        columna += 1
                     elif caracter == '\n':
                         columna = 1
                         fila += 1
@@ -167,12 +178,9 @@ class Analizador:
                         columna += 1
                     elif caracter == '\r':
                         pass
-                    #! Colocar aqui por si se necesita validar lo que esta dentro del texto
                     else:
                         buffer += caracter
                         columna += 1
-
-
 
             # Estado para cuando entra en "Funcion"
             #? --------------  Estado 4 --------------------- 
@@ -184,21 +192,175 @@ class Analizador:
             elif estado == 5:
                 pass
 
+            # Estado dentro del tag de la operacion aritmetica
             # #? --------------  Estado 6 --------------------- 
-            # elif estado == 6:
-            #     pass
+            elif estado == 6:
+                if re.search('[A-Za-z]', caracter):
+                    buffer += caracter
+                    columna += 1
+                elif caracter == centinela:
+                    print ('Cadena analizada')
+                else:
+                    if caracter == '>':
+                        # Ingresa a la opcion de tipo
+                        if buffer == 'SUMA' or buffer == 'RESTA' or buffer == 'MULTIPLICACION' or buffer == 'DIVISION' or buffer == 'POTENCIA' or buffer == 'RAIZ' or buffer == 'INVERSO' or buffer == 'SENO' or buffer == 'COSENO' or buffer == 'TANGENTE' or buffer == 'MOD':
+                            token.nuevoToken (buffer, 'Palabra reservada', (columna - 1), fila)
+                            operaciones.pilaOperaciones.append (buffer)
+                            estado = 2
+                        elif buffer == 'Numero':
+                            token.nuevoToken (buffer, 'Palabra reservada', (columna - 1), fila)
+                            estado = 7
+                        elif buffer == 'Tipo':
+                            token.nuevoToken (buffer, 'Palabra reservada', (columna - 1), fila)
+                            estado = 0
+                        elif buffer == 'Operacion':
+                            token.nuevoToken (buffer, 'Palabra reservada', (columna - 1), fila)
+                            estado = 2
+                        else:
+                            error.nuevoError (buffer, 'Error Lexico', (columna - 1), fila)
+                        token.nuevoToken (caracter, 'Cierre', columna, fila)
+                        columna += 1
+                        buffer = ''
+                    elif caracter == '=':
+                        if buffer == 'Operacion':
+                            token.nuevoToken (buffer, 'Palabra reservada', (columna - 1), fila)
+                            columna += 1
+                        else:
+                            error.nuevoError (buffer, 'Error lexico', (columna - 1), fila)
+                        token.nuevoToken (caracter, 'Asignación', columna, fila)
+                        columna += 1
+                        buffer = ''
+                    elif caracter == '/':
+                        token.nuevoToken (caracter, 'Cierre Tag', columna, fila)
+                        columna += 1
+                        buffer = ''
+                    else:
+                        if caracter == '\n':
+                            columna = 1
+                            fila = fila + 1
+                        elif caracter == '\t':
+                            columna += 4
+                        elif caracter == ' ':
+                            columna += 1
+                        elif caracter == '\r':
+                            pass
+                        else:
+                            error.nuevoError (caracter, 'Error léxico', columna, fila)
+                            columna += 1
 
+            # Estado en el que entra con el tag "Numero"
             # #? --------------  Estado 7 --------------------- 
-            # elif estado == 7:
-            #     pass
+            elif estado == 7:
+                if re.search('[0-9]', caracter) or re.search('[\.]', caracter):
+                    buffer += caracter
+                    columna += 1
+                elif caracter == centinela:
+                    print ('Cadena analizada')
+                else:
+                    if caracter == '<':
+                        if re.search ('[\.]', buffer):
+                            operaciones.pilaOperaciones.append (float(buffer))
+                            token.nuevoToken (buffer, 'Decimal', (columna - 1), fila)
+                        else:
+                            operaciones.pilaOperaciones.append (int(buffer))
+                            token.nuevoToken (buffer, 'Entero', (columna - 1), fila)
+                        token.nuevoToken (caracter, 'Apertura', columna, fila)
+                        columna += 1
+                        estado = 8
+                        buffer = ''
+                    elif caracter == centinela:
+                        print ('Cadena analizada')
+                    else:
+                        if caracter == '\n':
+                            columna = 1
+                            fila = fila + 1
+                        elif caracter == '\t':
+                            columna += 4
+                        elif caracter == ' ':
+                            columna += 1
+                        elif caracter == '\r':
+                            pass
+                        else:
+                            error.nuevoError (caracter, 'Error léxico', columna, fila)
+                            columna += 1
 
+            # Estado de cierre de tag "Numero"
             # #? --------------  Estado 8 --------------------- 
-            # elif estado == 8:
+            elif estado == 8:
+                if re.search('[A-Za-z]', caracter):
+                    buffer += caracter
+                    columna += 1
+                elif caracter == centinela:
+                    print ('Cadena analizada')
+                else:
+                    if caracter == '>':
+                        # Ingresa a la opcion de cierre de numero
+                        if buffer == 'Numero':
+                            token.nuevoToken (buffer, 'Palabra reservada', (columna - 1), fila)
+                            estado = 2
+                        else:
+                            error.nuevoError (buffer, 'Error Lexico', (columna - 1), fila)
+                        token.nuevoToken (caracter, 'Cierre', columna, fila)
+                        columna += 1
+                        buffer = ''
+                    elif caracter == '/':
+                        token.nuevoToken (caracter, 'Cierre Tag', columna, fila)
+                        columna += 1
+                        buffer = ''
+                    else:
+                        if caracter == '\n':
+                            columna = 1
+                            fila = fila + 1
+                        elif caracter == '\t':
+                            columna += 4
+                        elif caracter == ' ':
+                            columna += 1
+                        elif caracter == '\r':
+                            pass
+                        else:
+                            error.nuevoError (caracter, 'Error léxico', columna, fila)
+                            columna += 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            # 
+            # #? --------------  Estado 9 --------------------- 
+            # elif estado == 9:
             #     pass
             
+            # 
+            # #? --------------  Estado 10 --------------------- 
+            # elif estado == 10:
+            #     pass
+
+
+
+
+
             # Estado para cuando existe cierre de tag principal
-            #? --------------  Estado 10 --------------------- 
-            elif estado == 10:
+            #? --------------  Estado 100 --------------------- 
+            elif estado == 100:
                 if re.search('[A-Za-z]', caracter):
                     buffer += caracter
                     columna += 1
@@ -237,6 +399,9 @@ class Analizador:
         print ('\n\n************************')
         print ('Lista errores')
         error.erroresIngresados ()
+        print ('\n\n************************')
+        print ('Lista operaciones')
+        operaciones.operacionesIngresadas ()
         print ('Prueba')
         print (texto)
 
