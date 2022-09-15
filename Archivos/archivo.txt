@@ -33,7 +33,7 @@ Realizar las operaciones < básicas de suma, resta, multiplicación y división 
 
 
 <Funcion= ESCRIBIR>
-    <Titulo> Operaciones </Titulo>
+    <Titulo> Titulo del HTML </Titulo>
     <Descripcion> [TEXTO] </Descripcion>
     <Contenido> [TIPO] </Contenido>
 </Funcion=>
