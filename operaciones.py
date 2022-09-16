@@ -15,10 +15,14 @@ class OperacionesAritmeticas:
         self.numeroOperacion = 0
         self.texto = ''
 
+    def operacionesIngresadas (self):
+        for operacion in self.pilaOperaciones:
+            print (operacion)
+
     def operarPila (self):
         while self.contador < (len (self.pilaOperaciones)-1):
             dato = self.pilaOperaciones [self.contador]
-            if dato == 'SUMA' or dato == 'RESTA' or dato == 'MULTIPLICACION' or dato == 'DIVISION' or dato == 'POTENCIA' or dato == 'RAIZ' or dato == 'INVERSO' or dato == 'SENO' or dato == 'COSENO' or dato == 'TANGENTE' or dato == 'MOD':
+            if dato == 'SUMA' or dato == 'RESTA' or dato == 'MULTIPLICACION' or dato == 'DIVISION' or dato == 'POTENCIA' or dato == 'RAIZ' or dato == 'INVERSA' or dato == 'SENO' or dato == 'COSENO' or dato == 'TANGENTE' or dato == 'MOD':
                 resultado = self.lados (dato)
             print (self.texto)
             print (resultado)
@@ -29,13 +33,38 @@ class OperacionesAritmeticas:
     def lados (self, dato):
         self.contador += 1
         ladoIzquierdo = self.pilaOperaciones[self.contador]
-        if ladoIzquierdo == 'SUMA' or ladoIzquierdo == 'RESTA' or ladoIzquierdo == 'MULTIPLICACION' or ladoIzquierdo == 'DIVISION' or ladoIzquierdo == 'POTENCIA' or ladoIzquierdo == 'RAIZ' or ladoIzquierdo == 'INVERSO' or ladoIzquierdo == 'SENO' or ladoIzquierdo == 'COSENO' or ladoIzquierdo == 'TANGENTE' or ladoIzquierdo == 'MOD':
+        if ladoIzquierdo == 'SUMA' or ladoIzquierdo == 'RESTA' or ladoIzquierdo == 'MULTIPLICACION' or ladoIzquierdo == 'DIVISION' or ladoIzquierdo == 'POTENCIA' or ladoIzquierdo == 'RAIZ' or ladoIzquierdo == 'INVERSA' or ladoIzquierdo == 'SENO' or ladoIzquierdo == 'COSENO' or ladoIzquierdo == 'TANGENTE' or ladoIzquierdo == 'MOD':
             ladoIzquierdo = self.lados (ladoIzquierdo)
+        else:
+            if dato == 'INVERSA':
+                operacion = 1/ladoIzquierdo
+                return operacion
+            elif dato == 'SENO':
+                operacion = sin(ladoIzquierdo)
+                return operacion
+            elif dato == 'COSENO':
+                operacion = cos(ladoIzquierdo)
+                return operacion
+            elif dato == 'TANGENTE':
+                operacion = tan(ladoIzquierdo)
+                return operacion
         self.contador += 1
         ladoDerecho = self.pilaOperaciones[self.contador]
-        if ladoDerecho == 'SUMA' or ladoDerecho == 'RESTA' or ladoDerecho == 'MULTIPLICACION' or ladoDerecho == 'DIVISION' or ladoDerecho == 'POTENCIA' or ladoDerecho == 'RAIZ' or ladoDerecho == 'INVERSO' or ladoDerecho == 'SENO' or ladoDerecho == 'COSENO' or ladoDerecho == 'TANGENTE' or ladoDerecho == 'MOD':
+        if ladoDerecho == 'SUMA' or ladoDerecho == 'RESTA' or ladoDerecho == 'MULTIPLICACION' or ladoDerecho == 'DIVISION' or ladoDerecho == 'POTENCIA' or ladoDerecho == 'RAIZ' or ladoDerecho == 'INVERSA' or ladoDerecho == 'SENO' or ladoDerecho == 'COSENO' or ladoDerecho == 'TANGENTE' or ladoDerecho == 'MOD':
             ladoDerecho = self.lados (ladoDerecho)
-        if dato == 'SUMA':
+        if dato == 'INVERSA':
+            operacion = 1/ladoDerecho
+            return operacion
+        elif dato == 'SENO':
+            operacion = sin(ladoDerecho)
+            return operacion
+        elif dato == 'COSENO':
+            operacion = cos(ladoDerecho)
+            return operacion
+        elif dato == 'TANGENTE':
+            operacion = tan(ladoDerecho)
+            return operacion
+        elif dato == 'SUMA':
             operacion = ladoIzquierdo + ladoDerecho
             return operacion
         elif dato == 'RESTA':
@@ -47,43 +76,13 @@ class OperacionesAritmeticas:
         elif dato == 'DIVISION':
             operacion = ladoIzquierdo / ladoDerecho
             return operacion
+        elif dato == 'POTENCIA':
+            operacion = ladoIzquierdo ** ladoDerecho
+            return operacion
+        elif dato == 'RAIZ':
+            operacion = ladoIzquierdo ** (1/ladoDerecho)
+            return operacion
+        elif dato == 'MOD':
+            operacion = ladoIzquierdo % ladoDerecho
+            return operacion
     
-
-    def suma (self, izquierdo, derecho):
-        return int(izquierdo + derecho)
-
-    def resta (self, izquierdo, derecho):
-        return (izquierdo - derecho)
-    
-    def multiplicacion (self, izquierdo, derecho):
-        return (izquierdo * derecho)
-    
-    def division (self, izquierdo, derecho):
-        if derecho == 0:
-            return 'Error'
-        return (izquierdo / derecho)
-
-    def potencia (self, izquierdo, derecho):
-        return izquierdo ** derecho
-
-    def raiz (self, izquierdo, derecho):
-        if derecho == 0:
-            return 'Error'
-        return izquierdo ** (1/derecho)
-
-    def inverso (self, izquierdo):
-        if izquierdo == 0:
-            return 'Error'
-        return 1 / izquierdo
-
-    def seno (self, izquierdo):
-        return sin(izquierdo)
-
-    def coseno (self, izquierdo):
-        return cos(izquierdo)
-
-    def tangente (self, izquierdo):
-        return tan(izquierdo)
-
-    def mod (self, izquierdo, derecho):
-        return izquierdo % derecho

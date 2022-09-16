@@ -31,9 +31,9 @@ GRIS                    palabra reservada GRIS                      GRIS
 ------------------------------------- Signos ------------------------------------
 TIPO                            PATRON                              LEXEMA
 
-apertura                Caracter <                                  <
+Apertura                Caracter <                                  <
 cierre                  Caracter >                                  >
-asignacion              Caracter =                                  =
+Asignacion              Caracter =                                  =
 cierreTag               Caracter /                                  /
 
 -------------------------------------- Otros ------------------------------------

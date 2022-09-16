@@ -9,7 +9,8 @@ operaciones = OperacionesAritmeticas ()
 
 class Analizador:
     def __init__(self):
-        pass
+        self.listadoTokens = []
+        self.listadoDeErrores = []
 
     def analizar (self, cadena):
         # Inicializando los atributos
@@ -25,6 +26,11 @@ class Analizador:
         descripcion = False
         contenido = False
         estilos = ['Negro', 10, 'Negro', 10, 'Negro', 10]
+        # Reiniciando los datos
+        self.listadoTokens = []
+        self.listadoDeErrores = []
+        token.listaTokens = []
+        error.listaErrores = []
 
         # Analizando el texto plano
         #i = 0
@@ -281,7 +287,7 @@ class Analizador:
                 else:
                     if caracter == '>':
                         # Ingresa a la opcion de tipo
-                        if buffer == 'SUMA' or buffer == 'RESTA' or buffer == 'MULTIPLICACION' or buffer == 'DIVISION' or buffer == 'POTENCIA' or buffer == 'RAIZ' or buffer == 'INVERSO' or buffer == 'SENO' or buffer == 'COSENO' or buffer == 'TANGENTE' or buffer == 'MOD':
+                        if buffer == 'SUMA' or buffer == 'RESTA' or buffer == 'MULTIPLICACION' or buffer == 'DIVISION' or buffer == 'POTENCIA' or buffer == 'RAIZ' or buffer == 'INVERSA' or buffer == 'SENO' or buffer == 'COSENO' or buffer == 'TANGENTE' or buffer == 'MOD':
                             token.nuevoToken (buffer, 'Palabra reservada', (columna - 1), fila)
                             operaciones.pilaOperaciones.append (buffer)
                             estado = 2
@@ -566,12 +572,17 @@ class Analizador:
 
             # Aumentando i por cada letra
             # i += 1
+        self.listadoTokens = token.listaTokens
+        self.listadoDeErrores = error.listaErrores
         print ('\n\n************************')
         print ('Lista de tokens')
         token.tokensIngresados ()
         print ('\n\n************************')
         print ('Lista errores')
         error.erroresIngresados ()
+        print ('\n\n************************')
+        print ('Lista operaciones')
+        operaciones.operacionesIngresadas ()
         print ('Prueba')
         print (texto)
         print ('\n\n************************')
@@ -581,19 +592,4 @@ class Analizador:
         print ('\n\n************************')
         print (operaciones.operarPila ())
 
-
-    
-    # def caracteresEspeciales (self, caracter, columna, fila):
-    #     if caracter == '\n':
-    #         columna = 1
-    #         fila = fila + 1
-    #     elif caracter == '\t':
-    #         columna += 4
-    #     elif caracter == ' ':
-    #         columna += 1
-    #     elif caracter == '\r':
-    #         pass
-    #     else:
-    #         error.nuevoError (caracter, 'Error léxico', columna, fila)
-    #         columna += 1
         
