@@ -3,8 +3,11 @@
 
 <  ! % ^ Tipo> 
     <Operacion= SUMA> 
-        <Numero> ? 4.5 </Numero> 
-        <Numero> ! 5.32 </Numero> 
+        <Operacion= RESTA> 
+            <Numero> ? 3 </Numero> 
+            <Numero> ! 3 </Numero> 
+        </Operacion> 
+        <Numero> ! 8 </Numero> 
     </Operacion> 
     <Operacion= RESTA> 
         <Numero> 84 </Numero> 

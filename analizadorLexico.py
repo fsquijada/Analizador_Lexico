@@ -572,15 +572,14 @@ class Analizador:
         print ('\n\n************************')
         print ('Lista errores')
         error.erroresIngresados ()
-        print ('\n\n************************')
-        print ('Lista operaciones')
-        operaciones.operacionesIngresadas ()
         print ('Prueba')
         print (texto)
         print ('\n\n************************')
         print (f'Titulo: {estilos[0]}, {estilos[1]}')
         print (f'Descripcion: {estilos[2]}, {estilos[3]}')
         print (f'Contenido: {estilos[4]}, {estilos[5]}')
+        print ('\n\n************************')
+        print (operaciones.operarPila ())
 
 
     
