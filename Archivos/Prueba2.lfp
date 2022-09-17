@@ -1,11 +1,8 @@
-<  ! % ^ Tipo> 
+< Tipo> 
     <Operacion=RESTA>
         <Numero> 10 </Numero>
         <Numero> 2 </Numero>
     </Operacion>
-</Tipo>
-
-<  ! % ^ Tipo> 
     <Operacion=SUMA>
         <Numero> 3 </Numero>
         <Operacion=SUMA>
@@ -13,9 +10,6 @@
             <Numero> 12 </Numero>
         </Operacion>
     </Operacion>
-</Tipo>
-
-<  ! % ^ Tipo> 
     <Operacion=SUMA>
         <Operacion=SUMA>
             <Numero> 3 </Numero>
@@ -23,9 +17,6 @@
         </Operacion>
         <Numero> 9 </Numero>
     </Operacion>
-</Tipo>
-
-<  ! % ^ Tipo> 
     <Operacion=SUMA>
         <Operacion=SUMA>
             <Numero> 5 </Numero>

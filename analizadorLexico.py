@@ -589,9 +589,9 @@ class Analizador:
         print (f'Descripcion: {estilos[2]}, {estilos[3]}')
         print (f'Contenido: {estilos[4]}, {estilos[5]}')
         print ('\n\n************************')
-        print (operaciones.operarPila ())
-        error.GenerarHtmlErrores()
-        token.GenerarHtmlTokens()
+        operaciones.operarPila ()
+        #error.GenerarHtmlErrores()
+        #token.GenerarHtmlTokens()
 
     def Resultados (self):
         pass
