@@ -44,11 +44,3 @@ numeroDecimal           Secuencia de 1 o más dígitos, seguidos      187.32
                         por punto, seguido por 1 o más dígitos
 palabra                 Secuencia de 1 o más letras del abecedario  Hola
                         y añadiendo las tildes
-
-T = Tipo
-Tx = Texto
-O = Operacion
-N = Numero
-E = [0-9]
-
-Tipo | Operacion | [0-9] ....

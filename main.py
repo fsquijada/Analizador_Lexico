@@ -1,12 +1,12 @@
-from re import sub
+# from re import sub
 from menus import Menus
 from analizadorLexico import Analizador
-from tokens import Token
-from errores import Error
+# from tokens import Token
+# from errores import Error
 
 analizador =  Analizador ()
-token = Token ()
-error = Error ()
+# token = Token ()
+# error = Error ()
 
 if __name__ == '__main__':
     menu = Menus ()

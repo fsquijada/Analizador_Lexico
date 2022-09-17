@@ -1,4 +1,3 @@
-from lib2to3.pgen2 import token
 from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
@@ -6,15 +5,15 @@ from tkinter.messagebox import *
 import re
 # Importacion de clases
 from analizadorLexico import Analizador
-from errores import Error
-from tokens import Token
+# from errores import Error
+# from tokens import Token
 # Importación para abrir pdf
 import subprocess
 # Variables
 root = Tk()
 analizador =  Analizador()
-error = Error()
-token = Token()
+# error = Error()
+# token = Token()
 
 class Menus:
     #!::::::::::::::::::::::::::::::::VENTANAS::::::::::::::::::::::::::::::::::::::::::::::
@@ -37,10 +36,10 @@ class Menus:
         frame2.config(width='600', height='250', bg='lightblue')
         frame2.pack()
         # Barra de herramientas
-        menu = Menu (root)#, background='#ff8000', foreground='black', activebackground='white', activeforeground='black')
+        menu = Menu (root)
         root.config (menu=menu)
         # Sección de archivo en barra de herramientas
-        barraArchivo = Menu(menu, tearoff=0)#, tearoff=1, background='#ffcc99', foreground='black') 
+        barraArchivo = Menu(menu, tearoff=0)
         menu.add_cascade(label='Archivo', menu=barraArchivo)
         barraArchivo.add_command(label='Abrir', command=lambda: self.AbrirArchivo(cuadroTexto, botonGuardar))
         barraArchivo.add_command(label='Guardar como', command=lambda: self.GuardarComo(cuadroTexto, botonGuardar))
@@ -79,11 +78,11 @@ class Menus:
         # Para que la ventana principal se inicie automáticamente
         root.mainloop()
 
-    # Crear Ventana para la lista de cursos
+    # Crear Ventana para la tabla de errores
     def VentanaErrores (self):
         # Ocultar ventana principal
         self.OcultarVentana(root)
-        # Ventana de Selección de archivo
+        # Ventana de Errores
         ventanaErrores = Toplevel ()
         ventanaErrores.geometry(self.EditorVentana(root, 800, 500))
         ventanaErrores.title('INGENIERIA USAC - Tabla de errores')
@@ -108,7 +107,6 @@ class Menus:
         tituloSuperior.place()
         # Tabla
         tabla = ttk.Treeview(frame, columns=('#1', '#2', '#3', '#4'), height='8')
-        #tabla.bind('<Button-1>', Click)
         tabla.grid(row='10', column='0', columnspan='2', pady=100)
         tabla.column('#0', width=50)
         tabla.column('#1', width=240, anchor=CENTER)
@@ -127,11 +125,11 @@ class Menus:
         botonRegresar = ttk.Button (frame2, text='Regresar', command=lambda: self.MostrarEliminarVentana(root, ventanaErrores))
         botonRegresar.grid(column=3, row=2, ipadx=60, ipady=5, padx=10, pady=10)
 
-    # Crear Ventana para la lista de cursos
+    # Crear Ventana para la tabla de tokens
     def VentanaTokens (self):
         # Ocultar ventana principal
         self.OcultarVentana(root)
-        # Ventana de Selección de archivo
+        # Ventana de Tokens
         ventanaTokens = Toplevel ()
         ventanaTokens.geometry(self.EditorVentana(root, 800, 500))
         ventanaTokens.title('INGENIERIA USAC - Tabla de tokens')
@@ -156,7 +154,6 @@ class Menus:
         tituloSuperior.place()
         # Tabla
         tabla = ttk.Treeview(frame, columns=('#1', '#2', '#3', '#4'), height='8')
-        #tabla.bind('<Button-1>', Click)
         tabla.grid(row='10', column='0', columnspan='2', pady=100)
         tabla.column('#0', width=50)
         tabla.column('#1', width=240, anchor=CENTER)
@@ -200,10 +197,10 @@ class Menus:
     # Método para abrir y cargar archivos
     def AbrirArchivo (self, cuadroTexto, boton):
         if self.ruta != '':
-            respuesta = askyesno('Abrir archivo', '¿Deseas guardar el texto actual antes de abrir otro archivo?')
+            respuesta = askyesno('INGENIERIA USAC - Abrir archivo', '¿Deseas guardar el texto actual antes de abrir otro archivo?')
             if respuesta == True:
                 self.Guardar(cuadroTexto)
-        ruta = filedialog.askopenfilename(title='Abrir', filetypes=(('Archivos LFP (*.lfp)','*.lfp'),))
+        ruta = filedialog.askopenfilename(title='INGENIERIA USAC - Abrir', filetypes=(('Archivos LFP (*.lfp)','*.lfp'),))
         if (ruta != ''):
             archivo = open (ruta, 'r', 1, 'utf-8')
             textoPlano = archivo.read ()
@@ -212,7 +209,7 @@ class Menus:
             cuadroTexto.insert(1.0, textoPlano)
             boton['state'] = 'normal'
             self.ruta = ruta
-            showinfo('Carga de cursos', 'Los datos se han cargado correctamente')
+            showinfo('INGENIERIA USAC - Carga de cursos', 'Los datos se han cargado correctamente')
     
     # Abre un manual en formato pdf
     def AbrirManual (self, ruta):
@@ -222,10 +219,10 @@ class Menus:
     # Abre un manual en formato pdf
     def AnalizarTexto (self, texto, botonToken, botonError):
         documento = texto.get(1.0, 'end-1c')
-        analizador.analizar(documento)
+        analizador.Analizar(documento)
         botonToken['state'] = 'normal'
         botonError['state'] = 'normal'
-        showinfo('Analizador', 'El texto se ha analizado correctamente')
+        showinfo('INGENIERIA USAC - Analizador', 'El texto se ha analizado correctamente')
 
     # Guarda el texto que se encuentra en el cuadro de texto
     def Guardar (self, texto):
@@ -234,15 +231,15 @@ class Menus:
             documento = open (self.ruta, 'w', encoding='utf-8')
             documento.write(cuadroTexto)
             documento.close()
-            showinfo('Guardar', 'El texto se ha guardado correctamente')
+            showinfo('INGENIERIA USAC - Guardar', 'El texto se ha guardado correctamente')
         else:
-            showerror('Guardar', 'No existe nada en el cuadro de texto para guardar')
+            showerror('INGENIERIA USAC - Guardar', 'No existe nada en el cuadro de texto para guardar')
 
     # Guarda con un nuevo nombre el texto que se encuentra en el cuadro de texto
     def GuardarComo (self, texto, boton):
         cuadroTexto = texto.get(1.0, 'end-1c')
         if cuadroTexto != '':
-            nombreArchivo = filedialog.asksaveasfilename(title='Guardar como..', filetypes= (('lfp files', '*.lfp'),))#('Todos los archivos','*.*')))
+            nombreArchivo = filedialog.asksaveasfilename(title='INGENIERIA USAC - Guardar como..', filetypes= (('lfp files', '*.lfp'),))#('Todos los archivos','*.*')))
             if nombreArchivo != '':
                 busqueda = re.findall('\.lfp', nombreArchivo)
                 if busqueda != []:
@@ -254,9 +251,9 @@ class Menus:
                 documento.write(cuadroTexto)
                 documento.close()
                 boton['state'] = 'normal'
-                showinfo('Guardar como', 'El texto se ha guardado correctamente')
+                showinfo('INGENIERIA USAC - Guardar como', 'El texto se ha guardado correctamente')
         else:
-            showerror('Guardar como', 'No existe nada en el cuadro de texto para guardar')
+            showerror('INGENIERIA USAC - Guardar como', 'No existe nada en el cuadro de texto para guardar')
 
     # Método para agregar datos de error en la tabla
     def InsertarErrores (self, tabla):
@@ -274,4 +271,4 @@ class Menus:
     
     # Muestra la información del estudiante que realizó el proyecto.
     def Informacion (self):
-        showinfo ('Estudiante', 'Fredy Samuel Quijada Ceballos\nCarne: 202004812')
+        showinfo ('INGENIERIA USAC - Estudiante', 'Fredy Samuel Quijada Ceballos\nCarne: 202004812')
