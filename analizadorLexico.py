@@ -21,6 +21,7 @@ class Analizador:
         cadena += centinela
         estado = 0
         texto = ''
+        textoTitulo = ''
         bandera = False
         titulo = False
         descripcion = False
@@ -33,11 +34,8 @@ class Analizador:
         error.listaErrores = []
 
         # Analizando el texto plano
-        #i = 0
-        #while i < len(texto):
         for caracter in cadena:
-            #caracter = texto[i]
-            # Iniciando a estudiar los estados
+            # Iniciando a estudiar los estados a la espera de un signo '<'
             #? --------------  Estado 0 --------------------- 
             if estado == 0:
                 # Verificamos que empiece con un signo menor que
@@ -78,7 +76,10 @@ class Analizador:
                             estado = 2
                         elif buffer == 'Texto' or buffer == 'Titulo':
                             token.NuevoToken (buffer, 'Palabra reservada', (columna - 1), fila)
-                            estado = 3
+                            if buffer == 'Texto':
+                                estado = 3
+                            else:
+                                estado = 12
                         elif buffer == 'Estilo':
                             token.NuevoToken (buffer, 'Palabra reservada', (columna - 1), fila)
                             estado = 5
@@ -93,7 +94,6 @@ class Analizador:
                         token.NuevoToken (caracter, 'Cierre', columna, fila)
                         columna += 1
                         buffer = ''
-                        texto = ''
                     elif caracter == '=':
                         if buffer == 'Funcion':
                             token.NuevoToken (buffer, 'Palabra reservada', (columna - 1), fila)
@@ -487,10 +487,7 @@ class Analizador:
                         error.NuevoError (caracter, 'Error léxico', columna, fila)
                         columna += 1
 
-
-
-
-            # 
+            # Estado para colocar el tamaño del texto que tendrá el HTML
             # #? --------------  Estado 11 --------------------- 
             elif estado == 11:
                 if re.search('[0-9]', caracter):
@@ -531,8 +528,59 @@ class Analizador:
                         error.NuevoError (caracter, 'Error léxico', columna, fila)
                         columna += 1
 
-
-
+            # Estado para cuando entra en "Titulo"
+            #? --------------  Estado 12 --------------------- 
+            elif estado == 12:
+                if bandera == False:
+                    if caracter == '<':
+                        buffer += caracter
+                        columna += 1
+                        bandera = True
+                    elif caracter == centinela:
+                        print ('Cadena analizada')
+                    else:
+                        textoTitulo += caracter
+                        if caracter == '\n':
+                            columna = 1
+                            fila += 1
+                        elif caracter == '\t':
+                            columna += 4
+                        elif caracter == ' ':
+                            columna += 1
+                        elif caracter == '\r':
+                            pass
+                        else:
+                            columna += 1
+                else:
+                    if caracter == '<':
+                        textoTitulo += buffer
+                        buffer = caracter
+                        columna += 1
+                    elif caracter == centinela:
+                        print ('Cadena analizada')
+                    elif caracter == '/':
+                        buffer += caracter
+                        if buffer == '</':
+                            token.NuevoToken (textoTitulo, 'Cadena de texto', (columna - 2), fila)
+                            token.NuevoToken ('<', 'Apertura', (columna - 1), fila)
+                            token.NuevoToken (caracter, 'Cierre Tag', columna, fila)
+                            estado = 100
+                            bandera = False
+                            buffer = ''
+                        columna += 1
+                    elif caracter == '\n':
+                        columna = 1
+                        fila += 1
+                    elif caracter == '\t':
+                        columna += 4
+                    elif caracter == ' ':
+                        buffer += caracter
+                        columna += 1
+                    elif caracter == '\r':
+                        pass
+                    else:
+                        buffer += caracter
+                        columna += 1
 
             # Estado para cuando existe cierre de tag principal
             #? --------------  Estado 100 --------------------- 
@@ -548,9 +596,6 @@ class Analizador:
                         if buffer == 'Tipo' or buffer == 'Texto' or buffer == 'Funcion' or buffer == 'Estilo' or buffer == 'Titulo' or buffer == 'Descripcion' or buffer == 'Contenido':
                             token.NuevoToken (buffer, 'Palabra reservada', (columna - 1), fila)
                             estado = 0
-                        # elif buffer == 'Titulo':
-                        #     token.NuevoToken (buffer, 'Cadena de texto', (columna - 1), fila)
-                        #     estado = 0
                         else:
                             error.NuevoError (buffer, 'Error Lexico', (columna - 1), fila)
                         token.NuevoToken (caracter, 'Cierre', columna, fila)
@@ -570,28 +615,9 @@ class Analizador:
                             error.NuevoError (caracter, 'Error léxico', columna, fila)
                             columna += 1
 
-            # Aumentando i por cada letra
-            # i += 1
         self.listadoTokens = token.listaTokens
         self.listadoDeErrores = error.listaErrores
-        self.Resultados ()
-        # print ('\n\n************************')
-        # print ('Lista de tokens')
-        # token.TokensIngresados ()
-        # print ('\n\n************************')
-        # print ('Lista errores')
-        # error.ErroresIngresados ()
-        # print ('\n\n************************')
-        # print ('Lista operaciones')
-        operaciones.operacionesIngresadas ()
-        print ('\n\n************************')
-        print (f'Titulo: {estilos[0]}, {estilos[1]}')
-        print (f'Descripcion: {estilos[2]}, {estilos[3]}')
-        print (f'Contenido: {estilos[4]}, {estilos[5]}')
-        print ('\n\n************************')
-        operaciones.operarPila ()
-        #error.GenerarHtmlErrores()
-        #token.GenerarHtmlTokens()
+        operaciones.ReporteOperaciones (textoTitulo, texto, estilos)
+        error.GenerarHtmlErrores()
+        token.GenerarHtmlTokens()
 
-    def Resultados (self):
-        pass

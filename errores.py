@@ -8,15 +8,13 @@ class ConstructorError:
 class Error:
     def __init__ (self):
         self.listaErrores = []
-        
+    
+    # Agrega un nuevo error a la lista de errores
     def NuevoError (self, lexema, tipo, columna, fila):
         nuevo = ConstructorError (lexema, tipo, columna, fila)
         self.listaErrores.append (nuevo)
 
-    def ErroresIngresados (self):
-        for error in self.listaErrores:
-            print (f'{error.lexema}, {error.tipo}, {error.columna}, {error.fila}')
-    
+    # Genera un reporte en formato HTML de los errores encontrados    
     def GenerarHtmlErrores (self):
         file = open ('Reportes\ERRORES_202004812.html', 'w', encoding='utf-8')
         file.write('<!DOCTYPE html>\n')
@@ -25,7 +23,7 @@ class Error:
         file.write('\t<meta charset="UTF-8">\n')
         file.write('\t<meta http-equiv="X-UA-Compatible" content="IE=edge">\n')
         file.write('\t<meta name="viewport" content="width=device-width, initial-scale=1.0">\n')
-        file.write('\t<title>Document</title>\n')
+        file.write('\t<title>Errores</title>\n')
         file.write('</head>\n')
         file.write('<body>\n')
         file.write('\t<div align="center">\n')

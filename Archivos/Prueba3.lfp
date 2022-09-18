@@ -1,8 +1,5 @@
 <  ! % ^ Tipo> 
     <Operacion=SUMA>
-        <Operacion=INVERSA>
-            <Numero> 0.25 </Numero>
-        </Operacion>
         <Operacion=SUMA>
             <Numero> 6 </Numero>
             <Operacion=SUMA>
@@ -12,6 +9,9 @@
                 </Operacion>
                 <Numero> 9 </Numero>
             </Operacion>
+        </Operacion>
+        <Operacion=INVERSA>
+            <Numero> 0.25 </Numero>
         </Operacion>
     </Operacion>
 </Tipo>

@@ -5,15 +5,11 @@ from tkinter.messagebox import *
 import re
 # Importacion de clases
 from analizadorLexico import Analizador
-# from errores import Error
-# from tokens import Token
 # Importación para abrir pdf
 import subprocess
 # Variables
 root = Tk()
 analizador =  Analizador()
-# error = Error()
-# token = Token()
 
 class Menus:
     #!::::::::::::::::::::::::::::::::VENTANAS::::::::::::::::::::::::::::::::::::::::::::::

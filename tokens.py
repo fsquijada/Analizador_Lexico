@@ -8,15 +8,13 @@ class ConstructorToken:
 class Token:
     def __init__ (self):
         self.listaTokens = []
-        
+    
+    # Agrega un nuevo Token al listado
     def NuevoToken (self, lexema, tipo, columna, fila):
         nuevo = ConstructorToken (lexema, tipo, columna, fila)
         self.listaTokens.append (nuevo)
 
-    def TokensIngresados (self):
-        for token in self.listaTokens:
-            print (f'Lexema: {token.lexema}, Tipo: {token.tipo}, Columna: {token.columna}, Fila: {token.fila}')
-
+    # Genera un reporte en formato HTML de los tokens encontrados
     def GenerarHtmlTokens (self):
         file = open ('Reportes\TOKENS_202004812.html', 'w', encoding='utf-8')
         file.write('<!DOCTYPE html>\n')
@@ -25,7 +23,7 @@ class Token:
         file.write('\t<meta charset="UTF-8">\n')
         file.write('\t<meta http-equiv="X-UA-Compatible" content="IE=edge">\n')
         file.write('\t<meta name="viewport" content="width=device-width, initial-scale=1.0">\n')
-        file.write('\t<title>Document</title>\n')
+        file.write('\t<title>Tokens</title>\n')
         file.write('</head>\n')
         file.write('<body>\n')
         file.write('\t<div align="center">\n')
