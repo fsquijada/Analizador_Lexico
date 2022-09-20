@@ -24,23 +24,39 @@ COSENO                  palabra reservada COSENO                    COSENO
 TANGENTE                palabra reservada TANGENTE                  TANGENTE
 MOD                     palabra reservada MOD                       MOD
 ESCRIBIR                palabra reservada ESCRIBIR                  ESCRIBIR
+ROJO                    palabra reservada ROJO                      ROJO
+AMARILLO                palabra reservada AMARILLO                  AMARILLO
 AZUL                    palabra reservada AZUL                      AZUL
 VERDE                   palabra reservada VERDE                     VERDE
+NARANJA                 palabra reservada NARANJA                   NARANJA
+ANARANJADO              palabra reservada ANARANJADO                ANARANJADO
+BLANCO                  palabra reservada BLANCO                    BLANCO
+FUSIA                   palabra reservada FUSIA                     FUSIA
+AQUA                    palabra reservada AQUA                      AQUA
+CAFE                    palabra reservada CAFE                      CAFE
+MORADO                  palabra reservada MORADO                    MORADO
 GRIS                    palabra reservada GRIS                      GRIS
+CYAN                    palabra reservada CYAN                      CYAN
+ROSADO                  palabra reservada ROSADO                    ROSADO
+NEGRO                   palabra reservada NEGRO                     NEGRO
 
 ------------------------------------- Signos ------------------------------------
 TIPO                            PATRON                              LEXEMA
 
 Apertura                Caracter <                                  <
-cierre                  Caracter >                                  >
+Cierre                  Caracter >                                  >
 Asignacion              Caracter =                                  =
-cierreTag               Caracter /                                  /
+Cierre Tag              Caracter /                                  /
+Apertura Texto          Caracter [                                  [
+Cierre Texto            Caracter ]                                  ]
 
 -------------------------------------- Otros ------------------------------------
 TIPO                            PATRON                              LEXEMA
 
-numeroEntero            Secuencia de 1 o más dígitos                25
-numeroDecimal           Secuencia de 1 o más dígitos, seguidos      187.32
+Entero                  Secuencia de 1 o más dígitos                25
+Decimal                 Secuencia de 1 o más dígitos, seguidos      187.32
                         por punto, seguido por 1 o más dígitos
-palabra                 Secuencia de 1 o más letras del abecedario  Hola
-                        y añadiendo las tildes
+Cadena de texto         Secuencia de 1 o más letras del abecedario, Hola, $3 + $5 es = $8
+                        añadiendo tildes, dígitos, espacios,
+                        caracteres especiales como tabulaciones,
+                        todos los símbolos y signos de puntuación

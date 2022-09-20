@@ -107,7 +107,7 @@ class Analizador:
                     elif caracter == '/':
                         token.NuevoToken (caracter, 'Cierre Tag', (columna - 1), fila)
                         columna += 1
-                        estado = 100
+                        estado = 13
                     else:
                         if caracter == '\n':
                             columna = 1
@@ -160,6 +160,7 @@ class Analizador:
                     else:
                         texto += caracter
                         if caracter == '\n':
+                            texto += '<br>'
                             columna = 1
                             fila += 1
                         elif caracter == '\t':
@@ -183,7 +184,7 @@ class Analizador:
                             token.NuevoToken (texto, 'Cadena de texto', (columna - 2), fila)
                             token.NuevoToken ('<', 'Apertura', (columna - 1), fila)
                             token.NuevoToken (caracter, 'Cierre Tag', columna, fila)
-                            estado = 100
+                            estado = 13
                             bandera = False
                             buffer = ''
                         columna += 1
@@ -201,7 +202,7 @@ class Analizador:
                         buffer += caracter
                         columna += 1
 
-            # Estado para cuando entra en "Funcion"
+            # Estado para cuando entra en "Descripción" y "Contenido"
             #? --------------  Estado 4 --------------------- 
             elif estado == 4:
                 if re.search('[A-Za-z]', caracter):
@@ -233,7 +234,7 @@ class Analizador:
                         buffer += caracter
                         if buffer == '</':
                             token.NuevoToken (caracter, 'Cierre Tag', columna, fila)
-                            estado = 100
+                            estado = 13
                             bandera = False
                             buffer = ''
                         columna += 1
@@ -287,9 +288,10 @@ class Analizador:
                 else:
                     if caracter == '>':
                         # Ingresa a la opcion de tipo
-                        if buffer == 'SUMA' or buffer == 'RESTA' or buffer == 'MULTIPLICACION' or buffer == 'DIVISION' or buffer == 'POTENCIA' or buffer == 'RAIZ' or buffer == 'INVERSA' or buffer == 'SENO' or buffer == 'COSENO' or buffer == 'TANGENTE' or buffer == 'MOD':
+                        if buffer == 'Operacion' or buffer == 'SUMA' or buffer == 'RESTA' or buffer == 'MULTIPLICACION' or buffer == 'DIVISION' or buffer == 'POTENCIA' or buffer == 'RAIZ' or buffer == 'INVERSO' or buffer == 'SENO' or buffer == 'COSENO' or buffer == 'TANGENTE' or buffer == 'MOD':
                             token.NuevoToken (buffer, 'Palabra reservada', (columna - 1), fila)
-                            operaciones.pilaOperaciones.append (buffer)
+                            if buffer != 'Operacion':
+                                operaciones.pilaOperaciones.append (buffer)
                             estado = 2
                         elif buffer == 'Numero':
                             token.NuevoToken (buffer, 'Palabra reservada', (columna - 1), fila)
@@ -297,9 +299,9 @@ class Analizador:
                         elif buffer == 'Tipo':
                             token.NuevoToken (buffer, 'Palabra reservada', (columna - 1), fila)
                             estado = 0
-                        elif buffer == 'Operacion':
-                            token.NuevoToken (buffer, 'Palabra reservada', (columna - 1), fila)
-                            estado = 2
+                        # elif buffer == 'Operacion':
+                        #     token.NuevoToken (buffer, 'Palabra reservada', (columna - 1), fila)
+                        #     estado = 2
                         else:
                             error.NuevoError (buffer, 'Error Lexico', (columna - 1), fila)
                         token.NuevoToken (caracter, 'Cierre', columna, fila)
@@ -442,7 +444,7 @@ class Analizador:
                     elif caracter == '/':
                         token.NuevoToken (caracter, 'Cierre Tag', columna, fila)
                         columna += 1
-                        estado = 100
+                        estado = 13
                     elif caracter == '\n':
                         columna = 1
                         fila = fila + 1
@@ -466,7 +468,10 @@ class Analizador:
                                 estilos[2] = buffer
                             elif contenido == True:
                                 estilos[4] = buffer
-                            token.NuevoToken (buffer, 'Color', (columna-2), fila)
+                            if buffer == 'ROJO' or buffer == 'AMARILLO' or buffer == 'AZUL' or buffer == 'VERDE' or buffer == 'NARANJA' or buffer == 'ANARANJADO' or buffer == 'BLANCO' or buffer == 'FUSIA' or buffer == 'AQUA' or buffer == 'CAFE' or buffer == 'MORADO' or buffer == 'GRIS' or buffer == 'CYAN' or buffer == 'ROSADO' or buffer == 'NEGRO':
+                                token.NuevoToken (buffer, 'Palabra reservada', (columna-1), fila)
+                            else:
+                                error.NuevoError (buffer, 'Error léxico', (columna - 1), fila)
                             buffer = ''
                             estado = 9
                     buffer += caracter
@@ -504,7 +509,7 @@ class Analizador:
                                 estilos[3] = buffer
                             elif contenido == True:
                                 estilos[5] = buffer
-                            token.NuevoToken (buffer, 'Tamaño', (columna-1), fila)
+                            token.NuevoToken (buffer, 'Entero', (columna-1), fila)
                         token.NuevoToken (caracter, 'Cierre Tag', columna, fila)
                         columna += 1
                         buffer = caracter
@@ -564,7 +569,7 @@ class Analizador:
                             token.NuevoToken (textoTitulo, 'Cadena de texto', (columna - 2), fila)
                             token.NuevoToken ('<', 'Apertura', (columna - 1), fila)
                             token.NuevoToken (caracter, 'Cierre Tag', columna, fila)
-                            estado = 100
+                            estado = 13
                             bandera = False
                             buffer = ''
                         columna += 1
@@ -583,8 +588,8 @@ class Analizador:
                         columna += 1
 
             # Estado para cuando existe cierre de tag principal
-            #? --------------  Estado 100 --------------------- 
-            elif estado == 100:
+            #? --------------  Estado 13 --------------------- 
+            elif estado == 13:
                 if re.search('[A-Za-z]', caracter):
                     buffer += caracter
                     columna += 1
@@ -614,7 +619,7 @@ class Analizador:
                         else:
                             error.NuevoError (caracter, 'Error léxico', columna, fila)
                             columna += 1
-
+        # Para generar los reportes en HTML
         self.listadoTokens = token.listaTokens
         self.listadoDeErrores = error.listaErrores
         operaciones.ReporteOperaciones (textoTitulo, texto, estilos)
