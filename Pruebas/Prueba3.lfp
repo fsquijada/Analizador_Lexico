@@ -10,7 +10,7 @@
                 <Numero> 9 </Numero>
             </Operacion>
         </Operacion>
-        <Operacion=INVERSA>
+        <Operacion=INVERSO>
             <Numero> 0.25 </Numero>
         </Operacion>
     </Operacion>

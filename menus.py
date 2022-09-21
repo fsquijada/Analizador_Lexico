@@ -219,6 +219,9 @@ class Menus:
         botonToken['state'] = 'normal'
         botonError['state'] = 'normal'
         showinfo('INGENIERIA USAC - Analizador', 'El texto se ha analizado correctamente')
+        subprocess.Popen('Reportes\TOKENS_202004812.html', shell=True)
+        subprocess.Popen('Reportes\ERRORES_202004812.html', shell=True)
+        subprocess.Popen('Reportes\RESULTADOS_202004812.html', shell=True)
 
     # Guarda el texto que se encuentra en el cuadro de texto
     def Guardar (self, texto):
@@ -267,4 +270,4 @@ class Menus:
     
     # Muestra la información del estudiante que realizó el proyecto.
     def Informacion (self):
-        showinfo ('INGENIERIA USAC - Estudiante', 'Fredy Samuel Quijada Ceballos\nCarne: 202004812')
+        showinfo ('INGENIERIA USAC - Estudiante', 'Fredy Samuel Quijada Ceballos\nCarne: 202004812\nGit: fsquijada')

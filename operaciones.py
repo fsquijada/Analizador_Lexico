@@ -28,7 +28,6 @@ class OperacionesAritmeticas:
             else:
                 nuevo = ConstructorOperaciones (self.texto, 'Error')
             self.resultados.append (nuevo)
-            print(resultado)
             self.texto = ''
             self.contador += 1
             self.error = False
@@ -279,8 +278,9 @@ class OperacionesAritmeticas:
         # Parte iterativa por cada operación realizada
         for resultado in self.resultados:
             file.write(f'\t\t<h1 style="color: {arreglo[4]}; font-size: {arreglo[5]}px;">Operación: {resultado.operacion}</h1>\n')
-            file.write(f'\t\t<h1 style="color: {arreglo[4]}; font-size: {arreglo[5]}px;">Operación: {resultado.resultado}</h1>\n')
-            file.write(f'\t<h3> ------------------------------------------------------ </h3>\n')
+            file.write(f'\t\t<h1 style="color: {arreglo[4]}; font-size: {arreglo[5]}px;">Resultado: {resultado.resultado}</h1>\n')
+            file.write('<br>')
+            #file.write(f'\t<h3> ---------------------------------------- </h3>\n')
         file.write('\t</div>\n')
         file.write('</body>\n')
         file.write('</html>\n')
