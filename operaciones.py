@@ -255,7 +255,7 @@ class OperacionesAritmeticas:
             else: # Si no es ninguna de las anteriores que coloque negro
                 arreglo[contador] = '#000000'
             contador = contador + 2            
-        file = open ('Reportes\RESULTADOS_202004812.html', 'w', encoding='utf-8')
+        file = open ('C:\\Users\\fredy\\OneDrive\\Escritorio\\P1_202004812\\Reportes\\RESULTADOS_202004812.html', 'w', encoding='utf-8')
         file.write('<!DOCTYPE html>\n')
         file.write('<html lang=\"en\">\n')
         file.write('<head>\n')

@@ -16,7 +16,7 @@ class Token:
 
     # Genera un reporte en formato HTML de los tokens encontrados
     def GenerarHtmlTokens (self):
-        file = open ('Reportes\TOKENS_202004812.html', 'w', encoding='utf-8')
+        file = open ('C:\\Users\\fredy\\OneDrive\\Escritorio\\P1_202004812\\Reportes\\TOKENS_202004812.html', 'w', encoding='utf-8')
         file.write('<!DOCTYPE html>\n')
         file.write('<html lang=\"en\">\n')
         file.write('<head>\n')

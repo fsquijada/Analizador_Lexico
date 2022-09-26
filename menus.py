@@ -219,9 +219,9 @@ class Menus:
         botonToken['state'] = 'normal'
         botonError['state'] = 'normal'
         showinfo('INGENIERIA USAC - Analizador', 'El texto se ha analizado correctamente')
-        subprocess.Popen('Reportes\TOKENS_202004812.html', shell=True)
-        subprocess.Popen('Reportes\ERRORES_202004812.html', shell=True)
-        subprocess.Popen('Reportes\RESULTADOS_202004812.html', shell=True)
+        subprocess.Popen('C:\\Users\\fredy\\OneDrive\\Escritorio\\P1_202004812\\Reportes\\TOKENS_202004812.html', shell=True)
+        subprocess.Popen('C:\\Users\\fredy\\OneDrive\\Escritorio\\P1_202004812\\Reportes\\ERRORES_202004812.html', shell=True)
+        subprocess.Popen('C:\\Users\\fredy\\OneDrive\\Escritorio\\P1_202004812\\Reportes\\RESULTADOS_202004812.html', shell=True)
 
     # Guarda el texto que se encuentra en el cuadro de texto
     def Guardar (self, texto):
